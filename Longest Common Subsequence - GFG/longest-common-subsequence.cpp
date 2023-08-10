@@ -25,7 +25,7 @@ class Solution
                 ans = max(ans, dp[i][j]);
             }
         }
-        return d;
+        return dp[n][m];
     }
 };
 
