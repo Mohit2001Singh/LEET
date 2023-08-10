@@ -13,7 +13,6 @@ class Solution
     int lcs(int n, int m, string s1, string s2)
     {
         // your code here
-        int ans = INT_MIN;
         vector<vector<int>> dp(n+1, vector<int>(m+1, 0));
         for(int j = 1;j<=m;j++){
             for(int i =1;i<=n;i++){
@@ -22,7 +21,6 @@ class Solution
                 }else{
                     dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
                 }
-                ans = max(ans, dp[i][j]);
             }
         }
         return dp[n][m];
