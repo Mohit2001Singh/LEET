@@ -30,41 +30,41 @@ class Solution {
     // }
     
     // Memo
-    long long solve(int coins[], int sum, int i, vector<vector<long long>>& v){
-        if(i==0){
-            return (sum%coins[0] == 0);
-        }
-        if(v[i][sum] != -1){return v[i][sum];}
-        long long nott = solve(coins, sum, i-1, v);
-        long long take = 0;
-        if(sum >= coins[i]){
-            take = solve(coins, sum - coins[i], i, v);
-        }
-        return v[i][sum] = take+nott;
-    }
-    long long int count(int coins[], int N, int sum) {
-        vector<vector<long long>> v(N, vector<long long> (sum+1, -1));
-        return solve(coins, sum, N-1, v);
-    }
-    
-    // long long recur(int ind,int T,int coins[],vector<vector<long long>>& dp){
-    //     if(ind == 0){
-    //         return (T%coins[0]==0);
+    // long long solve(int coins[], int sum, int i, vector<vector<long long>>& v){
+    //     if(i==0){
+    //         return (sum%coins[0] == 0);
     //     }
-    //     if(dp[ind][T]!=-1){
-    //         return dp[ind][T];
+    //     if(v[i][sum] != -1){return v[i][sum];}
+    //     long long nott = solve(coins, sum, i-1, v);
+    //     long long take = 0;
+    //     if(sum >= coins[i]){
+    //         take = solve(coins, sum - coins[i], i, v);
     //     }
-    //     long long nottake = recur(ind-1,T,coins,dp);
-    //     long long take =0;
-    //     if(coins[ind]<=T){
-    //         take = recur(ind,T-coins[ind],coins,dp);
-    //     }
-    //     return dp[ind][T]= take+nottake;
+    //     return v[i][sum] = take+nott;
     // }
     // long long int count(int coins[], int N, int sum) {
-    //     vector<vector<long long>> dp(N,vector<long long> (sum+1,-1));
-    //     return recur(N-1,sum,coins,dp);
+    //     vector<vector<long long>> v(N, vector<long long> (sum+1, -1));
+    //     return solve(coins, sum, N-1, v);
     // }
+    
+    // bottom up
+    long long int count(int coins[], int N, int sum){
+        vector<vector<long long>> v(N, vector<long long> ( sum + 1, -1));
+        for(int i = 0;i<=sum;i++){
+            v[0][i] = (i%coins[0] == 0);
+        }
+        for(int s = 0;s <= sum; s++){
+            for(int i = 1;i<=N-1;i++){
+                long long nt = v[i-1][s];
+                long long t = 0;
+                if(s>=coins[i]){
+                    t = v[i][s- coins[i]];
+                }
+                v[i][s] = t+nt;
+            }
+        }
+        return v[N-1][sum];
+    }
 };
 
 //{ Driver Code Starts.
